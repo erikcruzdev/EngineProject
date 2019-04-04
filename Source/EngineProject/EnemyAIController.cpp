@@ -5,6 +5,7 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
+#include "Engine.h"
 
 #include "EnemyCharacterInterface.h"
 
@@ -23,7 +24,7 @@ void AEnemyAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//auto* playerActor = UGameplayStatics::GetPlayerCharacter(this, 0);
+
 	//UAIBlueprintHelperLibrary::SimpleMoveToActor(this, playerActor);
 
 	if (GetPawn()->Implements<UEnemyCharacterInterface>())
@@ -42,5 +43,37 @@ void AEnemyAIController::Tick(float DeltaTime)
 
 			UAIBlueprintHelperLibrary::SimpleMoveToActor(this, points[_currentPointIndex]);
 		}
+
+		TraceCheck();
 	}
 }
+
+void AEnemyAIController::TraceCheck()
+{
+	auto* playerActor = UGameplayStatics::GetPlayerCharacter(this, 0);
+
+	FCollisionQueryParams RV_TraceParams = FCollisionQueryParams(FName(TEXT("RV_Trace")), true, this);
+	RV_TraceParams.bTraceComplex = true;
+	RV_TraceParams.bTraceAsyncScene = true;
+	RV_TraceParams.bReturnPhysicalMaterial = false;
+
+	FVector Start = GetPawn()->GetActorLocation();
+	FVector End = Start + (GetPawn()->GetActorForwardVector()* 700.f);
+
+	//Re-initialize hit info
+	FHitResult RV_Hit(ForceInit);
+
+	//call GetWorld() from within an actor extending class
+	GetWorld()->LineTraceSingleByChannel(
+		RV_Hit,        //result
+		Start,    //start
+		End, //end
+		ECC_Pawn, //collision channel
+		RV_TraceParams
+	);
+	UE_LOG(LogTemp, Warning, TEXT("hit actor: %s"), *RV_Hit.GetActor()->GetName());
+
+
+}
+
+

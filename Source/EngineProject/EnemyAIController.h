@@ -20,8 +20,11 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	void TraceCheck();
+
 private:
 
 	int _currentPointIndex = 0;
+	bool _foundPlayer;
 
 };
