@@ -41,10 +41,10 @@ void AEnemyAIController::Tick(float DeltaTime)
 				_currentPointIndex = (_currentPointIndex + 1) % points.Num();
 			}
 
-			UAIBlueprintHelperLibrary::SimpleMoveToActor(this, points[_currentPointIndex]);
+			//UAIBlueprintHelperLibrary::SimpleMoveToActor(this, points[_currentPointIndex]);
 		}
 
-		TraceCheck();
+		//TraceCheck();
 	}
 }
 
