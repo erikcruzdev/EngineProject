@@ -48,6 +48,7 @@ void AEnemyAIController::Tick(float DeltaTime)
 	}
 }
 
+/*
 void AEnemyAIController::TraceCheck()
 {
 	auto* playerActor = UGameplayStatics::GetPlayerCharacter(this, 0);
@@ -74,6 +75,6 @@ void AEnemyAIController::TraceCheck()
 	UE_LOG(LogTemp, Warning, TEXT("hit actor: %s"), *RV_Hit.GetActor()->GetName());
 
 
-}
+}*/
 
 

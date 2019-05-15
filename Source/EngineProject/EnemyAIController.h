@@ -20,7 +20,7 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
-	void TraceCheck();
+	//void TraceCheck();
 
 private:
 
